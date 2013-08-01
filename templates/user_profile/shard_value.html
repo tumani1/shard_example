@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% load value_for_key %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="message{% if message.tags %} form_{{ message.tags }}{% endif %}">
+        <h3>{{ message }}</h3>
+    </div>
+
+    {% endfor %}
+    {% endif %}
+    <div>
+        {% if paging.has_previous %}
+            <a href="?page={{ paging.previous_page_number }}">Prev</a>
+        {% endif %}
+        <span class="current">
+            {{ paging.number }} страница из {{ paging.paginator.num_pages }}.
+        </span>
+        {% if paging.has_next %}
+            <a href="?page={{ paging.next_page_number }}">Next</a>
+        {% endif %}
+    </div>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Name</th>
+            <th>Adress</th>
+        </tr>
+        {% for profile in paging.object_list %}
+        <tr>
+            <td>{{ profile.pk }}</td>
+            <td>{{ account|dict_get:profile.user|dict_get:'name' }}</td>
+            <td>{{ profile.email }}</td>
+            <td>{{ profile.adress }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

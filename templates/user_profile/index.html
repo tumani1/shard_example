@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="message{% if message.tags %} form_{{ message.tags }}{% endif %}">
+        <h3>{{ message }}</h3>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% include "form.html" %}
+
+    <div id="shard_link">
+        {% for key, value in settings.APP_SHARD_PROFILE.items %}
+        <span><a href="{{ settings.SHARD_URL }}{{ key }}/"> Шард '{{ key }}'</a></span>
+        {% endfor %}
+    </div>
+{% endblock %}

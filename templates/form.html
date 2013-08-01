@@ -1,0 +1,27 @@
+{% if form.non_field_errors %}
+    <div class="non_field_errors">{{ form.non_field_errors }}</div>
+{% endif %}
+
+<form action="{{ request.path }}" method="post" class="common"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+{% csrf_token %}
+<fieldset>
+    {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+
+    <table>
+        {% for field in form.visible_fields %}
+        <tr{% if field.errors %} class="error"{% endif %}>
+            <td class="first{% if field.field.required %} required{% endif %}">{{ field.label_tag }}:</td>
+            <td>{{ field }}{% if field.field.help_text %}<span class="field_note">{{ field.field.help_text }}</span>{% endif %}{{ field.errors }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <input type="submit" value="{% if form_submit_value %}{{ form_submit_value }}{% else %}Отправить{% endif %}" class="submit" />
+            </td>
+        </tr>
+    </table>
+</fieldset>
+</form>
