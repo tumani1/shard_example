@@ -1,1 +1,1 @@
-Simple example how make sharding in Django
+It simple example implementation, how we can to make sharding in Django.
